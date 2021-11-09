@@ -16,9 +16,7 @@ block_size = 30
 top_left_x = (s_width - play_width) // 2
 top_left_y = s_height - play_height
 
-
 # SHAPE FORMATS
-
 S = [['.....',
       '.....',
       '..00.',
@@ -125,9 +123,8 @@ shapes = [S, Z, I, O, J, L, T]
 shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
 # index 0 - 6 represent shape
 
-
 #this class piece stores information about each shape
-class Piece(object):  # *
+class Piece(object):
     def __init__(self, x, y, shape):
         self.x = x
         self.y = y
@@ -136,7 +133,7 @@ class Piece(object):  # *
         self.rotation = 0
 
 #This function keeps tracks of each piece in the game
-def create_grid(locked_pos={}):  # *
+def create_grid(locked_pos={}):
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
 
     for i in range(len(grid)):
@@ -300,7 +297,7 @@ def draw_window(surface, grid, score=0, last_score = 0):
     #pygame.display.update()
 
 #This is the main function which has the main game loop
-def main(win):  # *
+def main(win):
     last_score = max_score()
     locked_positions = {}
     grid = create_grid(locked_positions)
@@ -383,8 +380,7 @@ def main(win):  # *
             run = False
             update_score(score)
 
-
-def main_menu(win):  # *
+def main_menu(win):
     run = True
     while run:
         win.fill((0,0,0))
@@ -397,7 +393,6 @@ def main_menu(win):  # *
                 main(win)
 
     pygame.display.quit()
-
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
