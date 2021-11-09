@@ -126,6 +126,7 @@ shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 16
 # index 0 - 6 represent shape
 
 
+#this class piece stores information about each shape
 class Piece(object):  # *
     def __init__(self, x, y, shape):
         self.x = x
@@ -134,7 +135,7 @@ class Piece(object):  # *
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
-
+#This function keeps tracks of each piece in the game
 def create_grid(locked_pos={}):  # *
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
 
@@ -145,7 +146,7 @@ def create_grid(locked_pos={}):  # *
                 grid[i][j] = c
     return grid
 
-
+#This function makes the shapes of multidimensional list understable by computer 
 def convert_shape_format(shape):
     positions = []
     format = shape.shape[shape.rotation % len(shape.shape)]
@@ -161,7 +162,7 @@ def convert_shape_format(shape):
 
     return positions
 
-
+#This function makes sure the shapes are moving in a valid space
 def valid_space(shape, grid):
     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
     accepted_pos = [j for sub in accepted_pos for j in sub]
@@ -174,7 +175,7 @@ def valid_space(shape, grid):
                 return False
     return True
 
-
+#This function checks if the user has lost the game
 def check_lost(positions):
     for pos in positions:
         x, y = pos
@@ -183,18 +184,18 @@ def check_lost(positions):
 
     return False
 
-
+#This function generates a random shape
 def get_shape():
     return Piece(5, 0, random.choice(shapes))
 
-
+#This functiion displays text in middle of the screen
 def draw_text_middle(surface, text, size, color):
     font = pygame.font.SysFont("comicsans", size, bold=True)
     label = font.render(text, 1, color)
 
     surface.blit(label, (top_left_x + play_width /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
 
-
+#This functioon draws grey grid lines in the play area so that we can see in which square the pieces are in
 def draw_grid(surface, grid):
     sx = top_left_x
     sy = top_left_y
@@ -204,7 +205,7 @@ def draw_grid(surface, grid):
         for j in range(len(grid[i])):
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
 
-
+#This function clears the row every time a row is filled 
 def clear_rows(grid, locked):
 
     inc = 0
@@ -228,7 +229,7 @@ def clear_rows(grid, locked):
 
     return inc
 
-
+#This function shows the next shape going to fall at right side of the screen
 def draw_next_shape(shape, surface):
     font = pygame.font.SysFont('comicsans', 30)
     label = font.render('Next Shape', 1, (255,255,255))
@@ -245,7 +246,7 @@ def draw_next_shape(shape, surface):
 
     surface.blit(label, (sx + 10, sy - 30))
 
-
+#this function updates a file name scores.txt for the latest score
 def update_score(nscore):
     score = max_score()
 
@@ -255,7 +256,7 @@ def update_score(nscore):
         else:
             f.write(str(nscore))
 
-
+#This function writes the scores.txt file and set max score
 def max_score():
     with open('scores.txt', 'r') as f:
         lines = f.readlines()
@@ -263,7 +264,7 @@ def max_score():
 
     return score
 
-
+#This function created the window in which the game is played 
 def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((0, 0, 0))
 
@@ -298,7 +299,7 @@ def draw_window(surface, grid, score=0, last_score = 0):
     draw_grid(surface, grid)
     #pygame.display.update()
 
-
+#This is the main function which has the main game loop
 def main(win):  # *
     last_score = max_score()
     locked_positions = {}
